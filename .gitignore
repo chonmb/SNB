@@ -1,0 +1,10 @@
+### virtual python ###
+venv
+
+### build ###
+release
+
+### pycharm ###
+.idea
+
+.Ds_Store
