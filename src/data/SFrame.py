@@ -4,7 +4,10 @@
 # Author: chonmb
 # Software: PyCharm
 # simulation for frame
+from src.core.AbstractClock import AbstractClock
 
-class SFrame:
+
+class SFrame(AbstractClock):
     def __init__(self):
+        super().__init__()
         self.dist = ''

@@ -8,8 +8,11 @@
 
 class AbstractClock:
     def __init__(self):
+        # current time
         self.current_clock = 0
+        # history data
         self.history = {}
+        # current data
         self.data = None
 
     def get_history(self, clock_stamp):
@@ -18,3 +21,8 @@ class AbstractClock:
     def next_clock(self):
         self.history[self.current_clock] = self.data
         self.current_clock += 1
+
+    def clear(self):
+        self.history.clear()
+        self.data = None
+        self.current_clock = 0

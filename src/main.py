@@ -5,6 +5,8 @@
 # Software: PyCharm
 # the start of simulation for network bridge. (SNB)
 # emmmm, sound like we are simulating nb？🤪
+from src.console.console import SConsole
 
 if __name__ == '__main__':
-    print('hello, snb')
+    console = SConsole()
+    console.start()

@@ -5,7 +5,7 @@
 # Software: PyCharm
 # this is simulation for client, we presume that a client stands for PC
 
-from ..core.AbstractNode import AbstractNode
+from src.core.AbstractNode import AbstractNode
 
 
 class SClient(AbstractNode):

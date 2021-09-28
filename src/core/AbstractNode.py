@@ -4,9 +4,12 @@
 # Author: chonmb
 # Software: PyCharm
 # definition of basic node, which should has some basic params and functions
+from src.core.AbstractClock import AbstractClock
 
-class AbstractNode:
+
+class AbstractNode(AbstractClock):
     def __init__(self, name):
+        super().__init__()
         self.name = name
 
     def rollback(self, index):

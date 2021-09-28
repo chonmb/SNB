@@ -10,5 +10,5 @@ class SLan:
         self.name = name
         self.spread_nodes = {}
 
-    def notify_all(self, name):
-        pass  # notified all registered nodes to deliver message
+    def notify_all(self, frame):
+        pass  # notified other registered nodes to deliver message
