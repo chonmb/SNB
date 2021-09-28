@@ -9,10 +9,10 @@ from src.core.AbstractNode import AbstractNode
 
 
 class SClient(AbstractNode):
-    def __init__(self, name):
+    def __init__(self, name, mac='', lan=None):
         super().__init__(name)
-        self.mac = ''
-        self.eth = None
+        self.mac = mac
+        self.lan = lan
 
-    def set_eth(self, eth):
-        self.eth = eth
+    def set_lan(self, lan):
+        self.lan = lan

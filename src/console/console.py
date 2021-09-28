@@ -18,8 +18,9 @@ class SConsole(Thread):
         print(command)  # parse command
 
     def __load_banner(self):
-        banner_file = open("resource/banner.txt")
-        return self.banner_template.format(''.join(banner_file.readlines()))
+        with open("resource/banner.txt") as banner_file:
+            banner_data = ''.join(banner_file.readlines())
+        return self.banner_template.format(banner_data)
 
     def run(self) -> None:
         print(self.banner)

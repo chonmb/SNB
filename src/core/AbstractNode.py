@@ -17,3 +17,6 @@ class AbstractNode(AbstractClock):
 
     def next_step(self):
         pass  # overwrite this function to implement next_step
+
+    def set_lan(self, lan):
+        pass  # set lans of nodes

@@ -18,3 +18,6 @@ class SBridge(AbstractNode):
 
     def remove_spreader(self, spreader_name):
         self.spreaders.pop(spreader_name)
+
+    def set_lan(self, lan):
+        self.add_spreader(lan)

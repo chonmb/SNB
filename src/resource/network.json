@@ -1,0 +1,45 @@
+{
+  "bridges": [
+    {
+      "name": "bridge0",
+      "lans": ["lan0","lan1"]
+    },
+    {
+      "name": "bridge1",
+      "lans": ["lan0","lan2"]
+    }
+  ],
+  "clients": [
+    {
+      "name": "client0",
+      "mac": "",
+      "lan": "lan0"
+    },
+    {
+      "name": "client1",
+      "mac": "",
+      "lan": "lan0"
+    },
+    {
+      "name": "client2",
+      "mac": "",
+      "lan": "lan1"
+    },
+    {
+      "name": "client3",
+      "mac": "",
+      "lan": "lan2"
+    }
+  ],
+  "lan": [
+    {
+      "name": "lan0"
+    },
+    {
+      "name": "lan1"
+    },
+    {
+      "name": "lan2"
+    }
+  ]
+}
