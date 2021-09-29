@@ -11,6 +11,7 @@
 
 ```
 ├── LICENSE
+├── requests.txt    项目依赖清单
 ├── README.md       readme
 ├── bin             脚本目录
 ├── docs            文档目录
@@ -24,6 +25,7 @@
     ├── nodes       节点模块
     ├── spreader    传播模块
     ├── utils       工具模块
+    ├── resource    静态资源文件
     └── view        视图模块
 ```
 
