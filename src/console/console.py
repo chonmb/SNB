@@ -37,8 +37,9 @@ class SConsole(Thread):
 
     def run(self) -> None:
         print(self.banner)
-        while True:
-            command = input('&snb < ')
-            if command == "quit":
-                break
-            self.parse_command(command)
+        self.view.show_network()
+        # while True:
+        #     command = input('&snb < ')
+        #     if command == "quit":
+        #         break
+        #     self.parse_command(command)

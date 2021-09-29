@@ -11,3 +11,6 @@ class SFrame(AbstractClock):
     def __init__(self):
         super().__init__()
         self.dist = ''
+
+    def trace_path(self):
+        return '->'.join(self.history.values())

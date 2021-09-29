@@ -22,7 +22,7 @@ class View:
         plt.show()
 
     def show_frame(self, frame_name):
-        pass  # display the frame
+        print(self.manager.frames[frame_name].trace_path())
 
     def show_relay_table(self, bridge_name):
-        pass  # display the relay table
+        print(self.manager.bridges[bridge_name].data)

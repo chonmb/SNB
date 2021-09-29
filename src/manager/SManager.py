@@ -20,6 +20,7 @@ class SManager:
         self.bridges = {}
         self.clients = {}
         self.lans = {}
+        self.frames = {}
         self.network = parse_network_config()
         self.init_network()
 
