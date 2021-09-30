@@ -12,22 +12,22 @@
   "clients": [
     {
       "name": "client0",
-      "mac": "",
+      "mac": "123",
       "lan": "lan0"
     },
     {
       "name": "client1",
-      "mac": "",
+      "mac": "456",
       "lan": "lan0"
     },
     {
       "name": "client2",
-      "mac": "",
+      "mac": "789",
       "lan": "lan1"
     },
     {
       "name": "client3",
-      "mac": "",
+      "mac": "345",
       "lan": "lan2"
     }
   ],

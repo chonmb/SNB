@@ -16,3 +16,11 @@ class SLan:
     def add_node(self, node):
         self.spread_nodes[node.name] = node
         node.set_lan(self)
+
+    def deliver(self, frame, node_from):
+        node_list = []
+        for node in self.spread_nodes.values():
+            if node.name == node_from.name:
+                continue
+            node_list.append(node)
+        return node_list

@@ -25,6 +25,9 @@ class SManager:
         self.init_network()
 
     def init_network(self):
+        """
+        load network from network.json(it is the default network)
+        """
         for lan in self.network["lan"]:
             self.lans[lan["name"]] = SLan(lan["name"])
         for client in self.network["clients"]:
@@ -36,3 +39,8 @@ class SManager:
             self.bridges[bridge["name"]] = b
             for lan_name in bridge["lans"]:
                 self.lans[lan_name].add_node(b)
+
+    def clear_network(self):
+        self.frames.clear()
+        for b in self.bridges:
+            b.clear()

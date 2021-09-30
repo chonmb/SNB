@@ -20,3 +20,6 @@ class AbstractNode(AbstractClock):
 
     def set_lan(self, lan):
         pass  # set lans of nodes
+
+    def deliver(self, frame, node_from):
+        pass  # get next node based on frame

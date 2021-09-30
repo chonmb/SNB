@@ -16,3 +16,8 @@ class SClient(AbstractNode):
 
     def set_lan(self, lan):
         self.lan = lan
+
+    def deliver(self, frame, node_from):
+        if frame.source_mac == self.mac:
+            return [self.lan]
+        return None
