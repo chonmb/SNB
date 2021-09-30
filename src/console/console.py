@@ -27,7 +27,7 @@ class SConsole(Thread):
         }
         self.command_map = {
             "show_network": lambda args: self.view.show_network(),
-            "help": lambda args: print("\n".join(["%-20s:%5s" % (k, v) for (k, v) in self.command_help.items()])),
+            "help": lambda args: self.help(),
             "send_frame_example": lambda args: self.send_frame_example(),
             "clear": lambda args: self.s_manager.clear_network(),
             "trace_frame": lambda args: None,
@@ -46,9 +46,15 @@ class SConsole(Thread):
             func_o(args)
 
     def __load_banner(self):
-        with open("resource/banner.txt") as banner_file:
+        with open("resource/banner.txt", encoding='utf-8') as banner_file:
             banner_data = ''.join(banner_file.readlines())
         return self.banner_template.format(banner_data)
+
+    def help(self):
+        """
+        show help list
+        """
+        print('\n'.join(["%-20s:%5s" % (k, v) for (k, v) in self.command_help.items()]))
 
     def send_frame_example(self):
         """
@@ -64,7 +70,7 @@ class SConsole(Thread):
             f.next_step()
             print(' '.join([b.node.name for b in f.branches]))
 
-    def run(self) -> None:
+    def run(self):
         print(self.banner)
         while True:
             command = input('&snb < ')

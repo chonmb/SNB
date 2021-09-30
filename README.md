@@ -1,7 +1,8 @@
 # Simulation for network bridge(SNB)  
 网桥仿真模拟
 
-
+### 安装
+相关依赖在`requests.txt`文件中
 
 ### 开始
 在pyccharm中启动`main.py`  

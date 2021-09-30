@@ -1,6 +1,7 @@
 ### virtual python ###
 venv
 __pycache__
+*.pyc
 
 ### build ###
 release

@@ -10,7 +10,7 @@ from src.nodes.SBridge import SBridge
 
 
 def parse_network_config():
-    with open("resource/network.json") as network:
+    with open("resource/network.json", encoding='utf-8') as network:
         network_map = json.load(network)
     return network_map
 
