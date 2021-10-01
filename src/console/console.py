@@ -41,9 +41,12 @@ class SConsole(Thread):
             func, args = command.split(" ")
         else:
             func = command
-        func_o = self.command_map[func]
-        if func_o is not None:
-            func_o(args)
+        if not func in self.command_map.keys():
+            print("wrong command!please check your spelling or use 'help' to know supported commands.")
+        else:
+            func_o = self.command_map[func]
+            if func_o is not None:
+                func_o(args)
 
     def __load_banner(self):
         with open("resource/banner.txt", encoding='utf-8') as banner_file:
