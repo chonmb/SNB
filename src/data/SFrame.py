@@ -29,6 +29,7 @@ class SFrame(AbstractClock):
         self.dist_mac = dist_mac
         self.current_node = None
         self.branches = []
+        self.next_branches = []
         self.death = False
 
     def trace_path(self):
@@ -37,20 +38,20 @@ class SFrame(AbstractClock):
     def build_frame(self, name, source_node, dist_node):
         self.__init__(name, source_node.mac, dist_node.mac)
         self.data = FrameTraceNode(source_node)
-        self.branches.append(self.data)
+        self.next_branches.append(self.data)
 
     def next_step(self):
-        if len(self.branches) == 0:
+        if len(self.next_branches) == 0:
             self.death = True
             return
         self.next_clock()
+        self.branches = self.next_branches
+        self.next_branches = []
         for branch in self.branches:
-            next_branches = []
             self.current_node = branch.node
             next_nodes = self.current_node.deliver(self, branch.parent.node if branch.parent is not None else None)
             if next_nodes is not None and len(next_nodes) != 0:
                 for n in next_nodes:
                     trace_node = FrameTraceNode(n)
                     branch.add_children(trace_node)
-                    next_branches.append(trace_node)
-            self.branches = next_branches
+                    self.next_branches.append(trace_node)
