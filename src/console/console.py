@@ -102,6 +102,7 @@ class SConsole(Thread):
 
     def run(self):
         print(self.banner)
+        self.view.show_network(is_output=True)
         while True:
             command = input('&snb < ')
             if command == "quit":
