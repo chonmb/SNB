@@ -22,5 +22,6 @@ class SLan:
         for node in self.spread_nodes.values():
             if node.name == node_from.name:
                 continue
+            print("[%s] received Frame[name:%s] from [%s]:spread to [%s]" % (self.name,frame.name,node_from.name,node.name))
             node_list.append(node)
         return node_list

@@ -24,16 +24,20 @@ class SBridge(AbstractNode):
         self.add_spreader(lan)
 
     def deliver(self, frame, node_from):
+        if self.data.get(frame.dist_mac) == node_from.name:
+            print("[%s] received Frame[name:%s] from Port[%s]:Ignore" % (self.name,frame.name,node_from.name))
+            return None
         self.data[frame.source_mac] = node_from.name
         if self.data.get(frame.dist_mac) is not None:
-            return [self.spreaders[self.data[frame.dist_mac]]]
-        if self.data.get(frame.dist_mac) == node_from.name:
-            return None
+            target_port = self.spreaders[self.data[frame.dist_mac]]
+            print("[%s] received Frame[name:%s] from Port[%s]:directly relay to Port[%s]" % (self.name,frame.name,node_from.name,target_port.name))
+            return [target_port]
         node_list = []
         for spreader in self.spreaders.values():
             if node_from.name == spreader.name:
                 continue
             else:
+                print("[%s] received Frame[name:%s] from Port[%s]:spread to Port[%s]" % (self.name,frame.name,node_from.name,spreader.name))
                 node_list.append(spreader)
         return node_list
 

@@ -88,7 +88,6 @@ class SConsole(Thread):
         while not f.death:
             time.sleep(0.5)
             f.next_step()
-            print(' '.join([b.node.name for b in f.branches]))
 
     def show_bridge_table(self,bridge_name=None):
         # print all bridge relay table when bridge name is not specified 

@@ -19,5 +19,10 @@ class SClient(AbstractNode):
 
     def deliver(self, frame, node_from):
         if frame.source_mac == self.mac:
+            print("[%s] send Frame[name:%s] from Port[%s]" % (self.name,frame.name,self.lan.name))
             return [self.lan]
+        if frame.dist_mac == self.mac:
+            print("[%s] received Frame[name:%s]:Accepted!!!" % (self.name,frame.name))
+        else:
+            print("[%s] received Frame[name:%s]:Declined!!!" % (self.name,frame.name))
         return None
