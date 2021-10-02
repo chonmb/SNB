@@ -19,6 +19,7 @@ class View:
             graph.add_node(lan.name)
             graph.add_edges_from([(lan.name, node.name) for node in lan.spread_nodes.values()])
         nx.draw(graph, with_labels=True)
+        plt.savefig("../docs/network.jpg")
         plt.show()
 
     def show_frame(self, frame_name):
