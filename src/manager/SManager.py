@@ -59,6 +59,11 @@ class SManager:
         if res is not None:
             self.init_failed(res + " already existed!")
 
+        macs = [client['mac'] for client in self.network["clients"]]
+        res = Util.check_repeated_elements(macs)
+        if res is not None:
+            self.init_failed(res + " already existed!")
+
         for bridge in self.network["bridges"]:
             for lan_name in bridge["lans"]:
                 if lan_name not in lan_names:
