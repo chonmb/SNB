@@ -42,6 +42,9 @@ class SBridge(AbstractNode):
         self.data.clear()
 
     def show_table(self):
+        print(self.name)
+        print("-------------------------")
         print("%-20s%-10s" % ("mac", "port"))
         print("-------------------------")
         print('\n'.join(["%-20s%-10s" % (k, v) for k, v in self.data.items()]))
+        print('\n')

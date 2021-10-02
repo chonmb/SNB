@@ -14,7 +14,6 @@ def parse_network_config():
         network_map = json.load(network)
     return network_map
 
-
 class SManager:
     def __init__(self):
         self.bridges = {}
