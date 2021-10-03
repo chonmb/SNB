@@ -9,8 +9,8 @@ from src.core.AbstractNode import AbstractNode
 
 
 class SClient(AbstractNode):
-    def __init__(self, name, mac='', lan=None):
-        super().__init__(name)
+    def __init__(self, name, clock, mac='', lan=None):
+        super().__init__(name, clock)
         self.mac = mac
         self.lan = lan
 
@@ -19,10 +19,10 @@ class SClient(AbstractNode):
 
     def deliver(self, frame, node_from):
         if frame.source_mac == self.mac:
-            print("[%s] send Frame[name:%s] from Port[%s]" % (self.name,frame.name,self.lan.name))
+            print("[%s] send Frame[name:%s] from Port[%s]" % (self.name, frame.name, self.lan.name))
             return [self.lan]
         if frame.dist_mac == self.mac:
-            print("[%s] received Frame[name:%s]:Accepted!!!" % (self.name,frame.name))
+            print("[%s] received Frame[name:%s]:Accepted!!!" % (self.name, frame.name))
         else:
-            print("[%s] received Frame[name:%s]:Declined!!!" % (self.name,frame.name))
+            print("[%s] received Frame[name:%s]:Declined!!!" % (self.name, frame.name))
         return None

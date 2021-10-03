@@ -22,8 +22,8 @@ class FrameTraceNode:
 
 
 class SFrame(AbstractClock):
-    def __init__(self, name='', s_mac='', dist_mac=''):
-        super().__init__()
+    def __init__(self, clock, name='', s_mac='', dist_mac='', ):
+        super().__init__(clock)
         self.name = name
         self.source_mac = s_mac
         self.dist_mac = dist_mac
@@ -36,7 +36,9 @@ class SFrame(AbstractClock):
         pass  # pretty print
 
     def build_frame(self, name, source_node, dist_node):
-        self.__init__(name, source_node.mac, dist_node.mac)
+        self.name = name
+        self.source_mac = source_node.mac
+        self.dist_mac = dist_node.mac
         self.data = FrameTraceNode(source_node)
         self.next_branches.append(self.data)
 
