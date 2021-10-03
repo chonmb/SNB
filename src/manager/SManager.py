@@ -87,3 +87,9 @@ class SManager:
         self.frames.clear()
         for b in self.bridges:
             b.clear()
+
+    def rollback(self, clock_index=-1):
+        if clock_index == -1:
+            self.global_clock.rollback(self.global_clock.current_clock - 1)
+        else:
+            self.global_clock.rollback(clock_index)

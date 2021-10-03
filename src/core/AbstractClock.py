@@ -17,7 +17,7 @@ class AbstractClock:
         self.data = None
 
     def get_history(self, clock_stamp):
-        return self.history[clock_stamp]
+        return self.history[clock_stamp] if self.history.get(clock_stamp) is not None else None
 
     def next_clock(self):
         self.history[self.clock.current_clock] = self.data

@@ -24,7 +24,8 @@ class SConsole(Thread):
             "send_frame_example": "send example frame(based on default network config)",
             "send_frame": "[source] [target] send an frame from a client to another(input client name)",
             "clear": "clear network memory",
-            "show_bridge_table": "[bridge_name] show bridge relay table(print all relay table when bridge is not specified)"
+            "show_bridge_table": "[bridge_name] show bridge relay table(print all relay table when bridge is not specified)",
+            "rollback": "(-optional)[clock_index] rollback the simulation"
         }
         self.command_map = {
             "show_network": lambda args: self.view.show_network(),
@@ -32,8 +33,10 @@ class SConsole(Thread):
             "send_frame_example": lambda args: self.send_frame_example(),
             "send_frame": lambda args: self.send_frame(args),
             "clear": lambda args: self.s_manager.clear_network(),
-            "trace_frame": lambda args: None,
-            "show_bridge_table": lambda args: self.show_bridge_table(args)
+            "show_frame_trace": lambda args: None,
+            "config_network": lambda args: None,
+            "show_bridge_table": lambda args: self.show_bridge_table(args),
+            "rollback": lambda args: self.s_manager.rollback() if args is None else self.s_manager.rollback(int(args))
         }
 
     def parse_command(self, command):
