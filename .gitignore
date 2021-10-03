@@ -5,6 +5,9 @@ __pycache__
 
 ### build ###
 release
+build
+dist
+main.spec
 
 ### pycharm ###
 .idea

@@ -12,6 +12,10 @@
 ### 结束
 命令行输入`quit`
 
+### 打包
+*windows平台*
+执行`bin/package.cmd`文件  
+打包成功后将`env.json`以及静态资源文件复制到`dist`目录下
 
 ### 项目结构
 

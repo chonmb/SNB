@@ -8,8 +8,8 @@ from src.core.AbstractClock import AbstractClock
 
 
 class AbstractNode(AbstractClock):
-    def __init__(self, name):
-        super().__init__()
+    def __init__(self, name, clock):
+        super().__init__(clock)
         self.name = name
 
     def rollback(self, index):

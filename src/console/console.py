@@ -14,8 +14,8 @@ class SConsole(Thread):
     def __init__(self):
         super().__init__()
         self.banner_template = '\033[36;1m{}\033[0m'
-        self.banner = self.__load_banner()
         self.s_manager = SManager()
+        self.banner = self.__load_banner()
         self.view = View(self.s_manager)
         self.command_help = {
             "show_network": "show the network graph",
@@ -41,8 +41,8 @@ class SConsole(Thread):
         if len(command.split(" ")) == 2:
             func, args = command.split(" ")
         elif len(command.split(" ")) == 3:
-            func,args1,args2 = command.split(" ")
-            args=[args1,args2]
+            func, args1, args2 = command.split(" ")
+            args = [args1, args2]
         else:
             func = command
         if not func in self.command_map.keys():
@@ -53,7 +53,7 @@ class SConsole(Thread):
                 func_o(args)
 
     def __load_banner(self):
-        with open("resource/banner.txt", encoding='utf-8') as banner_file:
+        with open(self.s_manager.env["path"]["banner"], encoding='utf-8') as banner_file:
             banner_data = ''.join(banner_file.readlines())
         return self.banner_template.format(banner_data)
 
@@ -70,9 +70,9 @@ class SConsole(Thread):
         the steps at intervals of 0.5 seconds
         will show the branch log of each step
         """
-        self.send_frame("client2","client3")
+        self.send_frame(["client2", "client3"])
 
-    def send_frame(self,args):
+    def send_frame(self, args):
         """
         send a frame from a client to another
         """
@@ -82,14 +82,18 @@ class SConsole(Thread):
         if self.s_manager.clients.get(args[0]) is None or self.s_manager.clients.get(args[1]) is None:
             print("wrong client name,please check again!")
             return
-        frame_name = args[0]+'_'+args[1]
-        f = SFrame()
+        frame_name = args[0] + '_' + args[1]
+        f = SFrame(self.s_manager.global_clock)
         f.build_frame(frame_name, self.s_manager.clients[args[0]], self.s_manager.clients[args[1]])
         while not f.death:
-            time.sleep(0.5)
-            f.next_step()
+            if self.s_manager.env["step"]["auto"] == "True":
+                time.sleep(float(self.s_manager.env["step"]["interval"]))
+            else:
+                print("press any key to continue")
+                input()
+            self.s_manager.global_clock.next()
 
-    def show_bridge_table(self,bridge_name=None):
+    def show_bridge_table(self, bridge_name=None):
         # print all bridge relay table when bridge name is not specified 
         if bridge_name is None:
             for bridge in self.s_manager.bridges.values():
@@ -102,7 +106,7 @@ class SConsole(Thread):
 
     def run(self):
         print(self.banner)
-        self.view.show_network(is_output=True)
+        # self.view.show_network(is_output=True)
         while True:
             command = input('&snb < ')
             if command == "quit":
