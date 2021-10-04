@@ -25,7 +25,9 @@ class SConsole(Thread):
             "send_frame": "[source] [target] send an frame from a client to another(input client name)",
             "clear": "clear network memory",
             "show_bridge_table": "[bridge_name] show bridge relay table(print all relay table when bridge is not specified)",
-            "rollback": "(-optional)[clock_index] rollback the simulation"
+            "show_frame_trace": "(-optional)[frame_name] show history of frame relay",
+            "rollback": "(-optional)[clock_index] rollback the simulation",
+            "reload_network": "update network"
         }
         self.command_map = {
             "show_network": lambda args: self.view.show_network(),
@@ -33,8 +35,9 @@ class SConsole(Thread):
             "send_frame_example": lambda args: self.send_frame_example(),
             "send_frame": lambda args: self.send_frame(args),
             "clear": lambda args: self.s_manager.clear_network(),
-            "show_frame_trace": lambda args: None,
-            "config_network": lambda args: None,
+            "show_frame_trace": lambda args: self.trace_path(args) if args is not None else self.trace_path(
+                "client2_client3"),
+            "reload_network": lambda args: self.s_manager.reload_network(),
             "show_bridge_table": lambda args: self.show_bridge_table(args),
             "rollback": lambda args: self.s_manager.rollback() if args is None else self.s_manager.rollback(int(args))
         }
@@ -66,6 +69,12 @@ class SConsole(Thread):
         """
         print('\n'.join(["%-20s:%5s" % (k, v) for (k, v) in self.command_help.items()]))
 
+    def trace_path(self, args):
+        if self.s_manager.frames.get(args) is None:
+            return None
+        else:
+            return self.s_manager.frames[args].trace_path()
+
     def send_frame_example(self):
         """
         ATTENTION: this function can be executed on default net
@@ -86,9 +95,10 @@ class SConsole(Thread):
             print("wrong client name,please check again!")
             return
         frame_name = args[0] + '_' + args[1]
-        f = SFrame(self.s_manager.global_clock)
+        f = SFrame(self.s_manager)
         f.build_frame(frame_name, self.s_manager.clients[args[0]], self.s_manager.clients[args[1]])
         while not f.death:
+            print("clock - %d:" % self.s_manager.global_clock.current_clock)
             if self.s_manager.env["step"]["auto"] == "True":
                 time.sleep(float(self.s_manager.env["step"]["interval"]))
             else:
@@ -97,7 +107,7 @@ class SConsole(Thread):
             self.s_manager.global_clock.next()
 
     def show_bridge_table(self, bridge_name=None):
-        # print all bridge relay table when bridge name is not specified 
+        # print all bridge relay table when bridge name is not specified
         if bridge_name is None:
             for bridge in self.s_manager.bridges.values():
                 bridge.show_table()

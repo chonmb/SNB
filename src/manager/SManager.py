@@ -93,3 +93,13 @@ class SManager:
             self.global_clock.rollback(self.global_clock.current_clock - 1)
         else:
             self.global_clock.rollback(clock_index)
+
+    def reload_network(self):
+        self.global_clock.clear()
+        self.frames.clear()
+        self.bridges.clear()
+        self.clients.clear()
+        self.lans.clear()
+        self.network = self.parse_network_config()
+        self.check_network()
+        self.init_network()
