@@ -8,6 +8,7 @@ from threading import Thread
 from src.manager.SManager import SManager
 from src.view.view import View
 from src.data.SFrame import SFrame
+from pynput.keyboard import Listener, Key
 
 
 class SConsole(Thread):
@@ -17,6 +18,7 @@ class SConsole(Thread):
         self.s_manager = SManager()
         self.banner = self.__load_banner()
         self.view = View(self.s_manager)
+        self.keyboard_listener = None
         self.command_help = {
             "show_network": "show the network graph",
             "help": "show command help",
@@ -97,14 +99,28 @@ class SConsole(Thread):
         frame_name = args[0] + '_' + args[1]
         f = SFrame(self.s_manager)
         f.build_frame(frame_name, self.s_manager.clients[args[0]], self.s_manager.clients[args[1]])
-        while not f.death:
-            print("clock - %d:" % self.s_manager.global_clock.current_clock)
-            if self.s_manager.env["step"]["auto"] == "True":
+        if self.s_manager.env["step"]["auto"] == "True":
+            while not f.death:
+                print("clock - %d:" % self.s_manager.global_clock.current_clock)
                 time.sleep(float(self.s_manager.env["step"]["interval"]))
-            else:
-                print("press any key to continue")
-                input()
+                self.s_manager.global_clock.next()
+        else:
+            with Listener(on_press=self.press_listen) as listener:
+                self.keyboard_listener = listener
+                print("press key 'down' to continue and press key 'up' to rollback.")
+                self.keyboard_listener.join()
+
+    def press_listen(self, key):
+        if not self.s_manager.is_frames_alive():
+            self.keyboard_listener.stop()
+            self.keyboard_listener = None
+            return
+        print("clock - %d:" % self.s_manager.global_clock.current_clock)
+        if key == Key.down:
             self.s_manager.global_clock.next()
+        if key == Key.up:
+            print("rollback to ", self.s_manager.global_clock.current_clock - 1)
+            self.s_manager.rollback()
 
     def show_bridge_table(self, bridge_name=None):
         # print all bridge relay table when bridge name is not specified

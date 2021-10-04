@@ -89,6 +89,8 @@ class SManager:
             b.clear()
 
     def rollback(self, clock_index=-1):
+        if self.global_clock.current_clock == 0:
+            return
         if clock_index == -1:
             self.global_clock.rollback(self.global_clock.current_clock - 1)
         else:
@@ -103,3 +105,9 @@ class SManager:
         self.network = self.parse_network_config()
         self.check_network()
         self.init_network()
+
+    def is_frames_alive(self):
+        for f in self.frames.values():
+            if not f.death:
+                return True
+        return False

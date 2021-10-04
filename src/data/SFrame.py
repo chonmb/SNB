@@ -27,11 +27,15 @@ class SFrame(AbstractClock):
         self.name = name
         self.source_mac = s_mac
         self.dist_mac = dist_mac
+        self.manager = manager
         self.current_node = None
         self.branches = []
         self.next_branches = []
         self.death = False
-        self.manager = manager
+        self.history_branches = {}
+        self.history_next_branches = {}
+        self.history_current_node = {}
+        self.history_death = {}
 
     def trace_path(self):
         print("frame name: %s\npath_trace: " % self.name)
@@ -54,11 +58,26 @@ class SFrame(AbstractClock):
         self.next_branches.append(self.data)
         self.manager.frames[self.name] = self
 
+    def record_data(self):
+        self.next_clock()
+        self.history_branches[self.clock.current_clock] = self.branches
+        self.history_next_branches[self.clock.current_clock] = self.next_branches
+        self.history_current_node[self.clock.current_clock] = self.current_node
+        self.history_death[self.clock.current_clock] = self.death
+
+    def recover(self, clock_stamp):
+        if clock_stamp in self.history.keys():
+            super().recover(clock_stamp)
+            self.branches = self.history_branches.get(clock_stamp)
+            self.current_node = self.history_current_node.get(clock_stamp)
+            self.death = self.history_death.get(clock_stamp)
+            self.next_branches = self.history_next_branches.get(clock_stamp)
+
     def next_step(self):
         if len(self.next_branches) == 0:
             self.death = True
             return
-        self.next_clock()
+        self.record_data()
         self.branches = self.next_branches
         self.next_branches = []
         for branch in self.branches:

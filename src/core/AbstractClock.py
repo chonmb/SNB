@@ -19,6 +19,9 @@ class AbstractClock:
     def get_history(self, clock_stamp):
         return self.history[clock_stamp] if self.history.get(clock_stamp) is not None else None
 
+    def recover(self, clock_stamp):
+        self.data = self.get_history(clock_stamp)
+
     def next_clock(self):
         self.history[self.clock.current_clock] = self.data
 
@@ -48,7 +51,7 @@ class Clock:
     def rollback(self, clock_index):
         self.current_clock = clock_index
         for listener in self.clock_listeners:
-            listener.data = listener.get_history(clock_index)
+            listener.recover(clock_index)
 
     def add_listener(self, listener: AbstractClock):
         if isinstance(listener, AbstractClock):
