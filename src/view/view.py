@@ -12,7 +12,7 @@ class View:
     def __init__(self, manager):
         self.manager = manager
 
-    def show_network(self, is_output=False):
+    def show_network(self):
         graph = nx.Graph()
         graph.add_nodes_from([b for b in self.manager.bridges.keys()])
         graph.add_nodes_from([c for c in self.manager.clients.keys()])
@@ -20,7 +20,7 @@ class View:
             graph.add_node(lan.name)
             graph.add_edges_from([(lan.name, node.name) for node in lan.spread_nodes.values()])
         nx.draw(graph, with_labels=True)
-        if is_output is True:
+        if self.manager.env["path"]["network_pic_output"] != "":
             self.save_network_pic(plt)
         plt.show()
 
