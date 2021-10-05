@@ -9,12 +9,13 @@ from src.manager.SManager import SManager
 from src.view.view import View
 from src.data.SFrame import SFrame
 from pynput.keyboard import Listener, Key
+import platform
 
 
 class SConsole(Thread):
     def __init__(self):
         super().__init__()
-        self.banner_template = '\033[36;1m{}\033[0m'
+        self.banner_template = '\033[36;1m{}\033[0m' if platform.system() != "Windows" else '{}'
         self.s_manager = SManager()
         self.banner = self.__load_banner()
         self.view = View(self.s_manager)

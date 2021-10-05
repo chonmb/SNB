@@ -6,6 +6,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import os
+import platform
 
 
 class View:
@@ -20,15 +21,20 @@ class View:
             graph.add_node(lan.name)
             graph.add_edges_from([(lan.name, node.name) for node in lan.spread_nodes.values()])
         nx.draw(graph, with_labels=True)
-        if self.manager.env["path"]["network_pic_output"] != "":
-            self.save_network_pic(plt)
-        plt.show()
+        if platform.system() != "Windows":
+            if self.manager.env["path"]["network_pic_output"] != "":
+                self.save_network_pic(plt)
+            else:
+                print("please config the 'network_pic_output' in 'env.json")
+        else:
+            plt.show()
 
     def save_network_pic(self, plt):
         pic = self.manager.env["path"]["network_pic_output"]
         if os.path.exists(pic):
             os.remove(pic)
         plt.savefig(pic)
+        print("the picture of network have saved to {}".format(pic))
 
     def show_frame(self, frame_name):
         print(self.manager.frames[frame_name].trace_path())
