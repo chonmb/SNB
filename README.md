@@ -1,5 +1,5 @@
 # Simulation for network bridge(SNB)  
-网桥仿真模拟
+网桥仿真模拟(高级计算机网络课程作业)
 
 ### 安装
 相关依赖在`requests.txt`文件中  
